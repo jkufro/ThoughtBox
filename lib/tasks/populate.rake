@@ -21,14 +21,17 @@ namespace :db do
     100.times do
       this_mood = Thought::MOODS.sample
       content = ''
-      if this_mood == 'happy'
+      if this_mood == 'positive'
         content = ThoughtsHelper.positive_thought
-      elsif this_mood == 'sad'
+      elsif this_mood == 'negative'
         content = ThoughtsHelper.negative_thought
       else  # neutral
         content = ThoughtsHelper.neutral_thought
       end
-      thoughts << Thought.new(content: content, mood: this_mood)
+      thought = Thought.new(content: content, mood: this_mood)
+      thought.save
+      thoughts << thought
+      sleep 0.1
     end
     puts 'generated all thoughts'
 
