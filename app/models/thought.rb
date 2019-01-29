@@ -1,5 +1,5 @@
 class Thought < ApplicationRecord
-    MOODS = ['happy', 'neutral', 'sad']
+  MOODS = ['happy', 'neutral', 'sad']
 
-    validates :mood, :inclusion=> { :in => MOODS }
+  validates :mood, :inclusion=> { :in => MOODS }
 end
