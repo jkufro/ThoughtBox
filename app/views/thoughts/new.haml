@@ -1,0 +1,11 @@
+
+
+
+
+
+%div
+  %h1 New Thought
+  = simple_form_for(@thought, :url => 'thought/new', :method => :post, html: { class: 'form-inline' }) do |f|
+    = f.input :content, input_html: { maxlength: 80 }
+    = f.input :mood, collection: Thought::MOODS
+    = f.button :submit, 'Save Thought', class: 'btn btn-success'

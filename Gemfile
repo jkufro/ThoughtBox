@@ -40,6 +40,7 @@ gem 'haml'
 gem 'faker', '1.9.1'
 gem 'jquery-rails'
 gem 'bootstrap', '~> 4.2.1'
+gem 'simple_form'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

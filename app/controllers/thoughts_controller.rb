@@ -11,4 +11,22 @@ class ThoughtsController < ApplicationController
     end
     render json: @thought
   end
+
+  def new
+    @thought = Thought.new()
+  end
+
+  def create
+    @thought = Thought.new(thought_params)
+    if @thought.save
+      redirect_to :home
+    else
+      render 'new'
+    end
+  end
+
+  private
+  def thought_params
+    params.require(:thought).permit(:content, :mood)
+  end
 end
