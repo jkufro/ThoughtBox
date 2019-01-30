@@ -4,5 +4,5 @@ Rails.application.routes.draw do
   get 'thoughts' => 'thoughts#index', :as => :home
   get 'thought' => 'thoughts#show'
   get 'thought/new' => 'thoughts#new'
-  post 'thought/create' => 'thought#create'
+  post 'thought/create' => 'thoughts#create'
 end
