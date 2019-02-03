@@ -37,6 +37,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'haml'
 gem 'faker', '1.9.1'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'bootstrap', '~> 4.2.1'
 gem 'simple_form'
 gem "rubocop-rails_config"

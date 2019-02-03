@@ -10,14 +10,24 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= require jquery-ui
  *= require_tree .
  *= require_self
  */
 @import "bootstrap";
 
-#thought-div {
-  height: 100%;
-  width:100%;
-  background: white;
-  padding: 5em
+html {
+ background: rgba(211, 212, 157, 0.8);
 }
+
+#thought-div {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 550px;
+  margin-right: auto;
+  margin-left: auto;
+  background: rgba(211, 212, 157, 0.8);
+  padding: 5em;
+}
+

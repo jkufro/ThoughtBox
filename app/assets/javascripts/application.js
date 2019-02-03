@@ -14,9 +14,17 @@
 //= require activestorage
 //= require turbolinks
 //= require jquery3
+//= require jquery-ui
 //= require popper
 //= require bootstrap-sprockets
 //= require_tree .
+
+var color_changing_element = "html, #thought-div"
+var positive_color = "rgba(65, 187, 64, 0.8)";
+var netutral_color = "rgba(211, 212, 157, 0.8)";
+var negative_color = "rgba(197, 44, 44, 0.8)";
+var transition_time = 3000  // ms
+var thought_text_id = "#thought"
 
 
 function run_ajax(method, data, url, success_callback=function(res){}, failure_callback=function(res){}){
@@ -34,6 +42,14 @@ function run_ajax(method, data, url, success_callback=function(res){}, failure_c
   })
 }
 
+function change_text(text) {
+  $(thought_text_id).fadeOut(transition_time / 2, function() {
+    $(thought_text_id).text(text);
+  });
+
+  $(thought_text_id).fadeIn(transition_time / 2);
+}
+
 
 function get_thought() {
   run_ajax('GET',
@@ -45,13 +61,13 @@ function get_thought() {
 }
 
 function get_thought_success(res) {
-  $('#thought').text(res.content);
+  change_text(res.content)
   if (res.mood == 'positive') {
-    $('#thought-div').css("background", "green");
+    $(color_changing_element).animate({backgroundColor: positive_color}, 3000);
   } else if (res.mood == 'negative') {
-    $('#thought-div').css("background", "red");
+    $(color_changing_element).animate({backgroundColor: negative_color}, 3000);
   } else {
-    $('#thought-div').css("background", "white");
+    $(color_changing_element).animate({backgroundColor: netutral_color}, 3000);
   }
 }
 
@@ -59,7 +75,7 @@ function get_thought_success(res) {
 function get_thought_failure(res) {
   console.log(res);
   $('#thought').text("Retrieving Thought...");
-  $('#thought-div').css("background", "white");
+  $(color_changing_element).css("background", "white");
 }
 
 
