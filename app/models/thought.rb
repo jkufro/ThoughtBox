@@ -3,5 +3,5 @@ class Thought < ApplicationRecord
 
   scope :by_created_at, -> { order('created_at DESC') }
 
-  validates :mood, :inclusion=> { :in => MOODS }
+  validates :mood, inclusion: { in: MOODS }
 end

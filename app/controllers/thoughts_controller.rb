@@ -26,7 +26,7 @@ class ThoughtsController < ApplicationController
   end
 
   private
-  def thought_params
-    params.require(:thought).permit(:content, :mood)
-  end
+    def thought_params
+      params.require(:thought).permit(:content, :mood)
+    end
 end
