@@ -10,7 +10,7 @@ How might memory become augmented in the future? What if we could externalize ou
 
 ## Deployment
 ### Heroku Deployment
-This project is automatically deployed to heroku at [https://jkufro-thought-box.heroku.com/](https://jkufro-thought-box.heroku.com/)
+This project is automatically deployed to heroku at [https://jkufro-thought-box.herokuapp.com/](https://jkufro-thought-box.herokuapp.com/)
 
 ### Deploying locally
 ```
