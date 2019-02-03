@@ -25,6 +25,7 @@ test:
 #   database: db/production.sqlite3
 
 production:
+  url: <%= ENV['DATABASE_URL'] %>
   adapter: postgresql
   database: thought_box_production
   pool: 5
