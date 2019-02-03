@@ -58,7 +58,7 @@ function get_thought_success(res) {
 
 function get_thought_failure(res) {
   console.log(res);
-  $('#thought').text("Retrieving thought...");
+  $('#thought').text("Retrieving Thought...");
   $('#thought-div').css("background", "white");
 }
 
