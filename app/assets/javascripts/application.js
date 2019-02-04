@@ -19,12 +19,15 @@
 //= require bootstrap-sprockets
 //= require_tree .
 
+var request_delay = 5000; // ms
 var color_changing_element = "html, #thought-div"
 var positive_color = "rgba(65, 187, 64, 0.8)";
 var netutral_color = "rgba(211, 212, 157, 0.8)";
 var negative_color = "rgba(197, 44, 44, 0.8)";
 var transition_time = 3000  // ms
 var thought_text_id = "#thought"
+var reactive_element = "#thought-div"
+var is_finger_on_screen = false;
 
 
 function run_ajax(method, data, url, success_callback=function(res){}, failure_callback=function(res){}){
@@ -41,6 +44,7 @@ function run_ajax(method, data, url, success_callback=function(res){}, failure_c
     }
   })
 }
+
 
 function change_text(text) {
   $(thought_text_id).fadeOut(transition_time / 2, function() {
@@ -60,6 +64,7 @@ function get_thought() {
           );
 }
 
+
 function get_thought_success(res) {
   change_text(res.content)
   if (res.mood == 'positive') {
@@ -74,16 +79,31 @@ function get_thought_success(res) {
 
 function get_thought_failure(res) {
   console.log(res);
-  $('#thought').text("Retrieving Thought...");
-  $(color_changing_element).css("background", "white");
+  set_to_thought_default();
+}
+
+
+function set_to_thought_default() {
+  change_text("Place Finger on Screen")
+  $(color_changing_element).animate({backgroundColor: netutral_color}, 3000);
 }
 
 
 $( document ).ready(function () {
-  let request_delay = 5000; // ms
+  $(reactive_element).on('mousedown touchstart',function(e){
+    is_finger_on_screen = true;
+  });
+  $(reactive_element).on('mouseup touchend',function(e){
+    is_finger_on_screen = false;
+  });
+
   setInterval(
     function() {
-      get_thought();
+      if (is_finger_on_screen) {
+        get_thought();
+      } else {
+        set_to_thought_default()
+      }
     }, request_delay
   );
 });
