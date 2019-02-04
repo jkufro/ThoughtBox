@@ -125,6 +125,8 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.10.1)
       mini_portile2 (~> 2.4.0)
+    open-iconic-rails (0.0.1)
+      rails (>= 3.1)
     parallel (1.13.0)
     parser (2.6.0.0)
       ast (~> 2.4.0)
@@ -264,6 +266,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   listen (>= 3.0.5, < 3.2)
+  open-iconic-rails
   pg
   puma (~> 3.11)
   rails (~> 5.2.1)

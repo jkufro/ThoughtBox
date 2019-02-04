@@ -41,6 +41,7 @@ gem 'jquery-ui-rails'
 gem 'bootstrap', '~> 4.2.1'
 gem 'simple_form'
 gem "rubocop-rails_config"
+gem 'open-iconic-rails'
 
 group :production do
   gem 'pg'
