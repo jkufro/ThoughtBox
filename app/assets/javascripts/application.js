@@ -84,7 +84,7 @@ function get_thought_failure(res) {
 
 
 function set_to_thought_default() {
-  change_text("Place Finger on Screen")
+  change_text("Place Finger on Cloud")
   $(color_changing_element).animate({backgroundColor: netutral_color}, 3000);
 }
 
