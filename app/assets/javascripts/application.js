@@ -27,7 +27,7 @@ var transition_time = 3000  // ms
 var thought_text_id = "#thought"
 var reactive_element = "#thought-div"
 var fingers_on_screen = 0;
-var default_text = "Press and Hold Cloud to Export Thought";
+var default_text = "Press and Hold to Export Thought";
 var failure_text = "Failed to Retrieve Thought";
 
 
