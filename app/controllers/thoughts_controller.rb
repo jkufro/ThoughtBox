@@ -1,4 +1,6 @@
 class ThoughtsController < ApplicationController
+  require 'net/http'
+
   def index
   end
 
@@ -8,6 +10,11 @@ class ThoughtsController < ApplicationController
       @thought = thoughts.first.created_at > 15.seconds.ago ? thoughts.first : thoughts.sample
     else
       @thought = Thought.new(content: 'No thoughts created yet', mood: 'neutral')
+    end
+
+    if ENV['PARTICLE_ID'] && ENV['PARTICLE_TOKEN']
+      uri = URI("https://api.particle.io/v1/devices/#{ENV['PARTICLE_ID']}/play?access_token=#{ENV['PARTICLE_TOKEN']}")
+      Net::HTTP.post(uri, {}.to_json, "Content-Type" => "application/json")
     end
     render json: @thought
   end
