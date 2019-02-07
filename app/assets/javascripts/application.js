@@ -19,7 +19,6 @@
 //= require bootstrap-sprockets
 //= require_tree .
 
-var request_delay = 5000; // ms
 var color_changing_element = "html, #thought-div"
 var positive_color = "rgba(65, 187, 64, 0.8)";
 var netutral_color = "rgba(211, 212, 157, 0.8)";
@@ -27,7 +26,9 @@ var negative_color = "rgba(197, 44, 44, 0.8)";
 var transition_time = 3000  // ms
 var thought_text_id = "#thought"
 var reactive_element = "#thought-div"
-var is_finger_on_screen = false;
+var fingers_on_screen = 0;
+var default_text = "Press and Hold Cloud to Export Thought";
+var failure_text = "Failed to Retrieve Thought";
 
 
 function run_ajax(method, data, url, success_callback=function(res){}, failure_callback=function(res){}){
@@ -67,43 +68,47 @@ function get_thought() {
 
 function get_thought_success(res) {
   change_text(res.content)
+  color = null;
   if (res.mood == 'positive') {
-    $(color_changing_element).animate({backgroundColor: positive_color}, 3000);
+    color = positive_color;
   } else if (res.mood == 'negative') {
-    $(color_changing_element).animate({backgroundColor: negative_color}, 3000);
+    color = negative_color;
   } else {
-    $(color_changing_element).animate({backgroundColor: netutral_color}, 3000);
+    color = netutral_color;
   }
+  $(color_changing_element).animate({backgroundColor: color}, 3000);
 }
 
 
 function get_thought_failure(res) {
   console.log(res);
-  set_to_thought_default();
+  set_to_thought_failed();
 }
 
 
 function set_to_thought_default() {
-  change_text("Press and Hold Cloud to Export Thought")
+  change_text(default_text)
+  $(color_changing_element).animate({backgroundColor: netutral_color}, 3000);
+}
+
+
+function set_to_thought_failed() {
+  change_text(failure_text)
   $(color_changing_element).animate({backgroundColor: netutral_color}, 3000);
 }
 
 
 $( document ).ready(function () {
   $(reactive_element).on('mousedown touchstart',function(e){
-    is_finger_on_screen = true;
+    fingers_on_screen += 1;
+    if (fingers_on_screen > 0 && $(thought_text_id).text() == default_text) {
+      get_thought();
+    }
   });
   $(reactive_element).on('mouseup touchend',function(e){
-    is_finger_on_screen = false;
+    fingers_on_screen -= 1;
+    if (fingers_on_screen <= 0 && $(thought_text_id).text() != default_text) {
+      set_to_thought_default();
+    }
   });
-
-  setInterval(
-    function() {
-      if (is_finger_on_screen) {
-        get_thought();
-      } else {
-        set_to_thought_default()
-      }
-    }, request_delay
-  );
 });
