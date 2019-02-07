@@ -84,7 +84,7 @@ function get_thought_failure(res) {
 
 
 function set_to_thought_default() {
-  change_text("Place Finger on Cloud")
+  change_text("Press and Hold Cloud to Export Thought")
   $(color_changing_element).animate({backgroundColor: netutral_color}, 3000);
 }
 
