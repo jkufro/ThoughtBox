@@ -29,6 +29,7 @@ var reactive_element = "#thought-div"
 var fingers_on_screen = 0;
 var default_text = "Press and Hold to Export Thought";
 var failure_text = "Failed to Retrieve Thought";
+var cooldown = false;
 
 
 function run_ajax(method, data, url, success_callback=function(res){}, failure_callback=function(res){}){
@@ -76,7 +77,9 @@ function get_thought_success(res) {
   } else {
     color = netutral_color;
   }
-  $(color_changing_element).animate({backgroundColor: color}, 3000);
+  $(color_changing_element).animate({backgroundColor: color}, 3000, function() {
+    cooldown = false;
+  });
 }
 
 
@@ -87,27 +90,33 @@ function get_thought_failure(res) {
 
 
 function set_to_thought_default() {
-  change_text(default_text)
-  $(color_changing_element).animate({backgroundColor: netutral_color}, 3000);
+  change_text(default_text);
+  $(color_changing_element).animate({backgroundColor: netutral_color}, 3000, function() {
+    cooldown = false;
+  });
 }
 
 
 function set_to_thought_failed() {
   change_text(failure_text)
-  $(color_changing_element).animate({backgroundColor: netutral_color}, 3000);
+  $(color_changing_element).animate({backgroundColor: netutral_color}, 3000, function() {
+    cooldown = false;
+  });
 }
 
 
 $( document ).ready(function () {
   $(reactive_element).on('mousedown touchstart',function(e){
     fingers_on_screen += 1;
-    if (fingers_on_screen > 0 && $(thought_text_id).text() == default_text) {
+    if (!cooldown && (fingers_on_screen > 0 && $(thought_text_id).text() == default_text)) {
+      cooldown = true;
       get_thought();
     }
   });
   $(reactive_element).on('mouseup touchend',function(e){
     fingers_on_screen -= 1;
-    if (fingers_on_screen <= 0 && $(thought_text_id).text() != default_text) {
+    if (!cooldown && (fingers_on_screen <= 0 && $(thought_text_id).text() != default_text)) {
+      cooldown = true;
       set_to_thought_default();
     }
   });
