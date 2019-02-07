@@ -15,7 +15,7 @@ This project is automatically deployed to heroku at [https://jkufro-thought-box.
 ### Deploying locally
 ```
 bundle install
-rails db:populate
+rails db:seed
 rails server
 ```
 
