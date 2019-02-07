@@ -15,6 +15,7 @@ Thought.create(content: "I'm so blessed to have such good friends.", mood: 'posi
 Thought.create(content: "My friends are my power!", mood: 'positive')
 Thought.create(content: "That #{Faker::Food.dish} I had was the best I ever tasted.", mood: 'positive')
 Thought.create(content: "I'm having so much fun!", mood: 'positive')
+Thought.create(content: "Wow, the Particle API is so cool!", mood: 'positive')
 # Thought.create(content: "", mood: 'positive')
 
 # Add neutral thoughts
@@ -31,6 +32,9 @@ Thought.create(content: "Remember to bring the proposal documents to work tomorr
 Thought.create(content: "Would the world end if Friends was removed from Netflix?", mood: 'neutral')
 Thought.create(content: "Remember to record the game tonight on the DVR.", mood: 'neutral')
 Thought.create(content: "I hope #{Faker::Name.first_name} gets me concert tickets for my birthday.", mood: 'neutral')
+Thought.create(content: "What should I do for Valentines Day?", mood: 'neutral')
+Thought.create(content: "I wonder what my life be like I'm older.", mood: 'neutral')
+Thought.create(content: "Should I be concerned about exporting my thoughts?", mood: 'neutral')
 # Thought.create(content: "", mood: 'neutral')
 
 # Add negative thoughts
