@@ -36,30 +36,37 @@ chain_thoughts([Thought.new(content: "I'm so excited that I'm going to get a new
                 Thought.new(content: "I regret not buying the cheaper car.", mood: 'neutral'),
                 Thought.new(content: "It's like the salesman was in my head... manipulating me.", mood: 'neutral')])
 
-# # remembering
-# chain_thoughts([Thought.new(content: "remembering1", mood: 'neutral'),
-#                 Thought.new(content: "remembering2", mood: 'neutral'),
-#                 Thought.new(content: "remembering3", mood: 'neutral')])
+# remembering
+chain_thoughts([Thought.new(content: "I need to remember to record the game on the DVR when I get home.", mood: 'neutral'),
+                Thought.new(content: "Pats versus Rams. This will be good!", mood: 'neutral'),
+                Thought.new(content: "This reminds me of #{Faker::Name.first_name} and how we used to watch together.", mood: 'neutral'),
+                Thought.new(content: "I can't watch anymore. It brings back too many memories...", mood: 'neutral')])
 
-# # surveillance
-# chain_thoughts([Thought.new(content: "surveillance1", mood: 'neutral'),
-#                 Thought.new(content: "surveillance2", mood: 'neutral'),
-#                 Thought.new(content: "surveillance3", mood: 'neutral')])
+# surveillance
+chain_thoughts([Thought.new(content: "Could the Oceania war with Eastasia be fake?", mood: 'neutral'),
+                Thought.new(content: "Does the Oceania government really care about its people?", mood: 'neutral'),
+                Thought.new(content: "Who could be at the door at this hour?", mood: 'neutral'),
+                Thought.new(content: "Oh no... it's the thought police.", mood: 'neutral')])
 
-# # reaching out to an old friend
-# chain_thoughts([Thought.new(content: "reaching out1", mood: 'neutral'),
-#                 Thought.new(content: "reaching out2", mood: 'neutral'),
+# reaching out to an old friend
+# chain_thoughts([Thought.new(content: "I miss #{Faker::Name.first_name}. I should call them later.", mood: 'neutral'),
+#                 Thought.new(content: "", mood: 'neutral'),
 #                 Thought.new(content: "reaching out3", mood: 'neutral')])
 
-# # blank mind
-# chain_thoughts([Thought.new(content: "blank1", mood: 'neutral'),
-#                 Thought.new(content: "blank2", mood: 'neutral'),
-#                 Thought.new(content: "blank3", mood: 'neutral')])
+# blank mind
+chain_thoughts([Thought.new(content: "...", mood: 'neutral'),
+                Thought.new(content: "What do tigers dream of when they take a little tiger snooze?", mood: 'neutral'),
+                Thought.new(content: "...", mood: 'neutral'),
+                Thought.new(content: "Was I just thinking of something important?", mood: 'neutral'),
+                Thought.new(content: "I just checked the time a few seconds ago but I already forgot what it was.", mood: 'neutral'),
+                Thought.new(content: "I'm bored.", mood: 'neutral')])
 
-# # life fulfillment, what if's?
-# chain_thoughts([Thought.new(content: "life1", mood: 'neutral'),
-#                 Thought.new(content: "life2", mood: 'neutral'),
-#                 Thought.new(content: "life3", mood: 'neutral')])
+# life fulfillment, what if's?
+chain_thoughts([Thought.new(content: "I wonder what my life be like I'm older...", mood: 'neutral'),
+                Thought.new(content: "Would my life be different if I had gone to #{Faker::Educator.university} instead?", mood: 'neutral'),
+                Thought.new(content: "What if I had dropped out and become a professional #{Faker::Music.instrument} player like I wanted?", mood: 'neutral'),
+                Thought.new(content: "Will I ever get to be the person I want to?", mood: 'neutral'),
+                Thought.new(content: "Will people remember me?", mood: 'neutral')])
 
 # Add positive thoughts
 # Thought.create(content: "I miss #{Faker::Name.first_name} so much. I should call them later.", mood: 'positive')
