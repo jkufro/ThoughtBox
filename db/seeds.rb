@@ -2,19 +2,44 @@
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 
 require 'faker'
+def chain_thoughts(thoughts_list)
+  return thoughts_list.first if thoughts_list.size <= 1
+
+  last_thought = nil
+  thoughts_list.each do |t|
+    if last_thought.nil?
+      last_thought = t
+      next
+    end
+
+    last_thought.next_thought = t
+    t.previous_thought = last_thought
+
+    last_thought = t
+  end
+
+  thoughts_list.each do |t|
+    t.save
+  end
+
+  return thoughts_list
+end
 
 # Remove all existing entries since Heroku doesn't allow dropping tables
 Thought.delete_all
-t1 = Thought.create(content: "T1", mood: 'positive')
-t2 = Thought.create(content: "T2", mood: 'positive')
-t3 = Thought.create(content: "T3", mood: 'positive')
-t1.next_thought = t2
-t2.previous_thought = t1
-t2.next_thought = t3
-t3.previous_thought = t2
-t1.save
-t2.save
-t3.save
+
+chain_thoughts([Thought.new(content: "T1", mood: 'positive'),
+                Thought.new(content: "T2", mood: 'positive'),
+                Thought.new(content: "T3", mood: 'positive')])
+
+
+# t1.next_thought = t2
+# t2.previous_thought = t1
+# t2.next_thought = t3
+# t3.previous_thought = t2
+# t1.save
+# t2.save
+# t3.save
 
 # Add positive thoughts
 # Thought.create(content: "I miss #{Faker::Name.first_name} so much. I should call them later.", mood: 'positive')

@@ -5,6 +5,8 @@ class Thought < ApplicationRecord
   MOODS = ['positive', 'neutral', 'negative']
 
   scope :by_created_at, -> { order('created_at DESC') }
+  scope :origin, -> { where(previous_thought: nil) }
+  scope :terminating, -> { where(next_thought: nil) }
 
   validates :mood, inclusion: { in: MOODS }
 end
