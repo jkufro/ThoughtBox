@@ -29,34 +29,37 @@ end
 Thought.delete_all
 
 # negotiating
-chain_thoughts([Thought.new(content: "negotiating1", mood: 'positive'),
-                Thought.new(content: "negotiating2", mood: 'positive'),
-                Thought.new(content: "negotiating3", mood: 'positive')])
+chain_thoughts([Thought.new(content: "I'm so excited that I'm going to get a new car today!", mood: 'neutral'),
+                Thought.new(content: "I'm able to pay $6,000 but I really would like to spend $4,000", mood: 'neutral'),
+                Thought.new(content: "This one is nice! And exactly $4,000!", mood: 'neutral'),
+                Thought.new(content: "Why is this salesman pushing the $6,000 car so much? It has more features but are they really worth it?", mood: 'neutral'),
+                Thought.new(content: "I regret not buying the cheaper car.", mood: 'neutral'),
+                Thought.new(content: "It's like the salesman was in my head... manipulating me.", mood: 'neutral')])
 
-# remembering
-chain_thoughts([Thought.new(content: "remembering1", mood: 'positive'),
-                Thought.new(content: "remembering2", mood: 'positive'),
-                Thought.new(content: "remembering3", mood: 'positive')])
+# # remembering
+# chain_thoughts([Thought.new(content: "remembering1", mood: 'neutral'),
+#                 Thought.new(content: "remembering2", mood: 'neutral'),
+#                 Thought.new(content: "remembering3", mood: 'neutral')])
 
-# surveillance
-chain_thoughts([Thought.new(content: "surveillance1", mood: 'positive'),
-                Thought.new(content: "surveillance2", mood: 'positive'),
-                Thought.new(content: "surveillance3", mood: 'positive')])
+# # surveillance
+# chain_thoughts([Thought.new(content: "surveillance1", mood: 'neutral'),
+#                 Thought.new(content: "surveillance2", mood: 'neutral'),
+#                 Thought.new(content: "surveillance3", mood: 'neutral')])
 
-# reaching out to an old friend
-chain_thoughts([Thought.new(content: "reaching out1", mood: 'positive'),
-                Thought.new(content: "reaching out2", mood: 'positive'),
-                Thought.new(content: "reaching out3", mood: 'positive')])
+# # reaching out to an old friend
+# chain_thoughts([Thought.new(content: "reaching out1", mood: 'neutral'),
+#                 Thought.new(content: "reaching out2", mood: 'neutral'),
+#                 Thought.new(content: "reaching out3", mood: 'neutral')])
 
-# blank mind
-chain_thoughts([Thought.new(content: "blank1", mood: 'positive'),
-                Thought.new(content: "blank2", mood: 'positive'),
-                Thought.new(content: "blank3", mood: 'positive')])
+# # blank mind
+# chain_thoughts([Thought.new(content: "blank1", mood: 'neutral'),
+#                 Thought.new(content: "blank2", mood: 'neutral'),
+#                 Thought.new(content: "blank3", mood: 'neutral')])
 
-# life fulfillment, what if's?
-chain_thoughts([Thought.new(content: "life1", mood: 'positive'),
-                Thought.new(content: "life2", mood: 'positive'),
-                Thought.new(content: "life3", mood: 'positive')])
+# # life fulfillment, what if's?
+# chain_thoughts([Thought.new(content: "life1", mood: 'neutral'),
+#                 Thought.new(content: "life2", mood: 'neutral'),
+#                 Thought.new(content: "life3", mood: 'neutral')])
 
 # Add positive thoughts
 # Thought.create(content: "I miss #{Faker::Name.first_name} so much. I should call them later.", mood: 'positive')
