@@ -58,65 +58,6 @@ function run_ajax(method, data, url, success_callback=function(res){}, failure_c
 }
 
 
-function change_text(text) {
-  $(thought_text_id).fadeOut(transition_time / 2, function() {
-    $(thought_text_id).text(text);
-  });
-
-  $(thought_text_id).fadeIn(transition_time / 2);
-}
-
-
-function get_thought() {
-  run_ajax('GET',
-           {},
-           '/thought',
-           function(res) { get_thought_success(res) },
-           function(res) { get_thought_failure(res) }
-          );
-}
-
-
-function get_thought_success(res) {
-  change_text(res.content)
-  color = null;
-  // if (res.mood == 'positive') {
-  //   color = positive_color;
-  // } else if (res.mood == 'negative') {
-  //   color = negative_color;
-  // } else {
-  //   color = netutral_color;
-  // }
-  $(color_changing_element).animate({backgroundColor: color}, 3000, function() {
-    cooldown = false;
-  });
-}
-
-
-function get_thought_failure(res) {
-  console.log(res);
-  set_to_thought_failed();
-}
-
-
-function set_to_thought_default() {
-  change_text(default_text);
-  $(color_changing_element).animate({backgroundColor: netutral_color}, 3000, function() {
-    cooldown = false;
-  });
-}
-
-
-function set_to_thought_failed() {
-  change_text(failure_text)
-  $(color_changing_element).animate({backgroundColor: netutral_color}, 3000, function() {
-    cooldown = false;
-  });
-}
-
-
-////////////////
-
 function reset() {
   $(thought_text_id).fadeOut(transition_time / 2, function() {
     $(thought_text_id).text(default_text);
@@ -126,6 +67,7 @@ function reset() {
     });
   });
 }
+
 
 function play_chain(chain, index, finished_callback=function(){}) {
   if (index >= chain.length) {
