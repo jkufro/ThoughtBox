@@ -36,6 +36,26 @@ html {
   left: 0px;
   bottom: 0px;
   width: 0%;
-  height: 25px;
-  background-color: red;
+  height: 10px;
+  background-color: #f7de63;
+}
+
+#loading-text {
+  position: absolute;
+  left: 0px;
+  bottom: 15px;
+}
+
+/* https://stackoverflow.com/questions/69430/is-there-a-way-to-make-text-unselectable-on-an-html-page */
+.unselectable {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
 }

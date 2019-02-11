@@ -26,20 +26,27 @@ var negative_color = "rgba(197, 44, 44, 0.8)";
 var transition_time = 3000  // ms
 var thought_text_id = "#thought"
 var reactive_element = "#thought-div"
-var fingers_on_screen = 0;
 var default_text = "Press and Hold to Export";
 var failure_text = "Failed to Export";
-var cooldown = false;
-
 
 var progress_element = '#progress-bar'
 var max_progess = 100;
 var min_progress = 0;
 var current_progress = min_progress;
-var progress_speed = 5;
+var progress_speed = 1;
 var scanning = false;
-
 var playing = false;
+
+var loading_text_element = "#loading-text";
+var loading_texts = [{ text: "Reading body temperature", len: 15 },
+                     { text: "Reading pulse", len: 10 },
+                     { text: "Exporting brain waves", len: 20 },
+                     { text:"Analyzing brain waves", len: 20 },
+                     { text: "Cross referencing readings with database", len: 20},
+                     { text: "Running cleanup tasks", len: 10},
+                     { text: "Export complete", len: 5}];
+var current_loading_text_index = 0;
+var current_loading_text_progress = 0;
 
 
 function run_ajax(method, data, url, success_callback=function(res){}, failure_callback=function(res){}){
@@ -132,6 +139,33 @@ function draw_progress() {
 }
 
 
+function increment_loading_text() {
+  current_loading_text = loading_texts[current_loading_text_index]
+  suffix = "";
+  for (var i = 0; i <= current_loading_text_progress; i++) {
+    suffix = suffix + '.';
+  }
+  if (current_loading_text['text'] == "Export complete") {
+    suffix = "";
+  }
+  $(loading_text_element).text(current_loading_text['text'] + suffix);
+
+  current_loading_text_progress += 1
+  if (current_loading_text_progress >= current_loading_text['len']) {
+    current_loading_text_index += 1;
+    current_loading_text_progress = 0;
+  }
+  if (current_loading_text_index >= loading_texts.length) {
+    current_loading_text_index = 0;
+  }
+}
+
+function reset_loading_text() {
+  $(loading_text_element).text("");
+  current_loading_text_index = 0;
+  current_loading_text_progress = 0;
+}
+
 $( document ).ready(function () {
   $(reactive_element).on('mousedown touchstart',function(e){
     if (!playing) {
@@ -143,12 +177,14 @@ $( document ).ready(function () {
       scanning = false;
       current_progress = min_progress;
       draw_progress();
+      reset_loading_text()
     }
   });
 
   setInterval(function(){
     if (scanning) {
       increment_progress();
+      increment_loading_text();
       draw_progress();
 
       if (is_progress_full()) {
@@ -156,6 +192,7 @@ $( document ).ready(function () {
         playing = true;
         current_progress = min_progress;
         draw_progress();
+        reset_loading_text()
         get_and_play_chain();
       }
     }
