@@ -8,7 +8,6 @@ class ThoughtsController < ApplicationController
 
   def show
     origin_thoughts = Thought.all.origin.by_created_at
-    puts(@@origin_index)
 
     if origin_thoughts.size > 0
       origin = origin_thoughts.first.created_at > 15.seconds.ago ? origin_thoughts.first : origin_thoughts[@@origin_index % origin_thoughts.size]
