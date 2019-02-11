@@ -170,6 +170,7 @@ $( document ).ready(function () {
   $(reactive_element).on('mousedown touchstart',function(e){
     if (!playing) {
       scanning = true;
+      $(thought_text_id).text("")
     }
   });
   $(reactive_element).on('mouseup touchend',function(e){
@@ -177,7 +178,8 @@ $( document ).ready(function () {
       scanning = false;
       current_progress = min_progress;
       draw_progress();
-      reset_loading_text()
+      reset_loading_text();
+      $(thought_text_id).text(default_text)
     }
   });
 
