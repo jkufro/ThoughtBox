@@ -27,9 +27,19 @@ var transition_time = 3000  // ms
 var thought_text_id = "#thought"
 var reactive_element = "#thought-div"
 var fingers_on_screen = 0;
-var default_text = "Press and Hold to Export Thought";
-var failure_text = "Failed to Retrieve Thought";
+var default_text = "Press and Hold to Export";
+var failure_text = "Failed to Export";
 var cooldown = false;
+
+
+var progress_element = '#progress-bar'
+var max_progess = 100;
+var min_progress = 0;
+var current_progress = min_progress;
+var progress_speed = 5;
+var scanning = false;
+
+var playing = false;
 
 
 function run_ajax(method, data, url, success_callback=function(res){}, failure_callback=function(res){}){
@@ -70,13 +80,13 @@ function get_thought() {
 function get_thought_success(res) {
   change_text(res.content)
   color = null;
-  if (res.mood == 'positive') {
-    color = positive_color;
-  } else if (res.mood == 'negative') {
-    color = negative_color;
-  } else {
-    color = netutral_color;
-  }
+  // if (res.mood == 'positive') {
+  //   color = positive_color;
+  // } else if (res.mood == 'negative') {
+  //   color = negative_color;
+  // } else {
+  //   color = netutral_color;
+  // }
   $(color_changing_element).animate({backgroundColor: color}, 3000, function() {
     cooldown = false;
   });
@@ -105,19 +115,107 @@ function set_to_thought_failed() {
 }
 
 
+////////////////
+
+function reset() {
+  $(thought_text_id).fadeOut(transition_time / 2, function() {
+    $(thought_text_id).text(default_text);
+    $(thought_text_id).fadeIn(transition_time / 2, function() {
+      playing = false;
+      scanning = false;
+    });
+  });
+}
+
+function play_chain(chain, index, finished_callback=function(){}) {
+  if (index >= chain.length) {
+    finished_callback();
+    return;
+  }
+
+  thought = chain[index]
+  text = thought['content']
+  console.log(chain);
+
+  $(thought_text_id).fadeOut(transition_time / 2, function() {
+    $(thought_text_id).text(text);
+    $(thought_text_id).fadeIn(transition_time / 2, function() {
+      play_chain(chain, index + 1, finished_callback);
+    });
+  });
+}
+
+
+function get_chain_success(res) {
+  play_chain(res, 0, finished_callback=reset);
+}
+
+
+function get_chain_failure(res) {
+  failed_thought_chain = [{
+    id: 1,
+    content: failure_text,
+    mood: "positive",
+    next_thought_id: null,
+    previous_thought_id: null,
+    updated_at: "2019-02-11T00:32:31.551Z",
+    created_at: "2019-02-11T00:32:31.547Z"
+  }]
+  play_chain(failed_thought_chain, 0, finished_callback=reset);
+}
+
+
+function get_and_play_chain() {
+  run_ajax('GET',
+           {},
+           '/thought',
+           function(res) { get_chain_success(res) },
+           function(res) { get_chain_failure(res) }
+          );
+}
+
+
+function is_progress_full() {
+  return current_progress >= max_progess;
+}
+
+
+function increment_progress() {
+  current_progress = Math.min(current_progress + progress_speed, max_progess);
+}
+
+
+function draw_progress() {
+  $(progress_element).css({width: current_progress + '%'})
+}
+
+
 $( document ).ready(function () {
   $(reactive_element).on('mousedown touchstart',function(e){
-    fingers_on_screen += 1;
-    if (!cooldown && (fingers_on_screen > 0 && $(thought_text_id).text() == default_text)) {
-      cooldown = true;
-      get_thought();
+    if (!playing) {
+      scanning = true;
     }
   });
   $(reactive_element).on('mouseup touchend',function(e){
-    fingers_on_screen -= 1;
-    if (!cooldown && (fingers_on_screen <= 0 && $(thought_text_id).text() != default_text)) {
-      cooldown = true;
-      set_to_thought_default();
+    if (scanning) {
+      scanning = false;
+      current_progress = min_progress;
+      draw_progress();
     }
   });
+
+  setInterval(function(){
+    if (scanning) {
+      increment_progress();
+      draw_progress();
+
+      if (is_progress_full()) {
+        scanning = false;
+        playing = true;
+        current_progress = min_progress;
+        draw_progress();
+        get_and_play_chain();
+      }
+    }
+  }, 100);
 });

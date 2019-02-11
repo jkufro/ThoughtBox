@@ -5,18 +5,21 @@ class ThoughtsController < ApplicationController
   end
 
   def show
-    thoughts = Thought.all.by_created_at
-    if thoughts.size > 0
-      @thought = thoughts.first.created_at > 15.seconds.ago ? thoughts.first : thoughts.sample
+    origin_thoughts = Thought.all.origin.by_created_at
+
+    if origin_thoughts.size > 0
+      origin = origin_thoughts.first.created_at > 15.seconds.ago ? origin_thoughts.first : origin_thoughts.sample
+      @thought_chain = get_chain(origin)
     else
-      @thought = Thought.new(content: 'No thoughts created yet', mood: 'neutral')
+      @thought_chain = [Thought.new(content: 'No thoughts created yet', mood: 'neutral')]
     end
 
     if ENV['PARTICLE_ID'] && ENV['PARTICLE_TOKEN']
       uri = URI("https://api.particle.io/v1/devices/#{ENV['PARTICLE_ID']}/play?access_token=#{ENV['PARTICLE_TOKEN']}")
       Net::HTTP.post(uri, {}.to_json, "Content-Type" => "application/json")
     end
-    render json: @thought
+
+    render json: @thought_chain
   end
 
   def new
@@ -35,5 +38,12 @@ class ThoughtsController < ApplicationController
   private
     def thought_params
       params.require(:thought).permit(:content, :mood)
+    end
+
+    def get_chain(origin, chain = [])
+      return chain if origin.nil?
+
+      chain << origin
+      get_chain(origin.next_thought, chain)
     end
 end
