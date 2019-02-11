@@ -42,7 +42,8 @@ var loading_texts = [{ text: "Reading body temperature", len: 15 },
                      { text: "Reading pulse", len: 10 },
                      { text: "Exporting brain waves", len: 20 },
                      { text:"Analyzing brain waves", len: 20 },
-                     { text: "Cross referencing readings with database", len: 20},
+                     { text: "Cross referencing readings with database", len: 10},
+                     { text: "Determining related thoughts", len: 10},
                      { text: "Running cleanup tasks", len: 10},
                      { text: "Export complete", len: 5}];
 var current_loading_text_index = 0;
@@ -84,7 +85,6 @@ function play_chain(chain, index, finished_callback=function(){}) {
 
   thought = chain[index]
   text = thought['content']
-  console.log(chain);
 
   $(thought_text_id).fadeOut(transition_time / 2, function() {
     $(thought_text_id).text(text);
@@ -109,7 +109,7 @@ function get_chain_failure(res) {
     previous_thought_id: null,
     updated_at: "2019-02-11T00:32:31.551Z",
     created_at: "2019-02-11T00:32:31.547Z"
-  }]
+  }];
   play_chain(failed_thought_chain, 0, finished_callback=reset);
 }
 
@@ -135,7 +135,7 @@ function increment_progress() {
 
 
 function draw_progress() {
-  $(progress_element).css({width: current_progress + '%'})
+  $(progress_element).css({width: current_progress + '%'});
 }
 
 
@@ -170,7 +170,7 @@ $( document ).ready(function () {
   $(reactive_element).on('mousedown touchstart',function(e){
     if (!playing) {
       scanning = true;
-      $(thought_text_id).text("")
+      $(thought_text_id).text("");
     }
   });
   $(reactive_element).on('mouseup touchend',function(e){
@@ -179,7 +179,7 @@ $( document ).ready(function () {
       current_progress = min_progress;
       draw_progress();
       reset_loading_text();
-      $(thought_text_id).text(default_text)
+      $(thought_text_id).text(default_text);
     }
   });
 
