@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_29_180915) do
+ActiveRecord::Schema.define(version: 2019_02_11_000553) do
 
   create_table "thoughts", force: :cascade do |t|
     t.string "content"
     t.string "mood"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "previous_thought_id"
+    t.integer "next_thought_id"
   end
 
 end
